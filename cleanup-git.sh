@@ -12,7 +12,16 @@ function get_first_char {
 }
 
 function get_reply {
-	echo -ne "Remove \033[1m$1:$BRANCH\033[0m remote and local branches?"
+	if [ -n "$1" ]
+	then
+		READ_REMOTE="$1:"
+		REMOTE_INFO=" remote and local branches"
+	else
+		READ_REMOTE=
+		REMOTE_INFO=" local branch"
+	fi
+
+	echo -ne "Remove \033[1m$READ_REMOTE$BRANCH\033[0m$REMOTE_INFO?"
 	read -p " (y/n/i) "
 }
 
@@ -50,13 +59,13 @@ do
 		continue
 	fi
 
-	get_reply "local"
+	get_reply
 
 	while [ "`get_first_char $REPLY`" = 'i' ]
 	do
 		echo "$UPSTREAM..$BRANCH contains:"
 		git log $UPSTREAM..$BRANCH
-		get_reply "local"
+		get_reply
 	done
 
 	if [ "`get_first_char $REPLY`" = 'y' ]
