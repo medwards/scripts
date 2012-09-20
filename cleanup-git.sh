@@ -12,7 +12,7 @@ function get_first_char {
 }
 
 function get_reply {
-	echo -ne "Remove \033[1m$FORK_REMOTE:$BRANCH\033[0m remote and local branches?" 
+	echo -ne "Remove \033[1m$1:$BRANCH\033[0m remote and local branches?"
 	read -p " (y/n/i) "
 }
 
@@ -20,13 +20,13 @@ function get_reply {
 REMOTE_BRANCHES=`git branch -r | grep $FORK_REMOTE/ | grep -v master | grep -v HEAD| cut -d/ -f2`
 for BRANCH in $REMOTE_BRANCHES
 do
-	get_reply
+	get_reply $FORK_REMOTE
 
 	while [ "`get_first_char $REPLY`" = 'i' ]
 	do
 		echo "$UPSTREAM..$FORK_REMOTE/$BRANCH contains:"
 		git log $UPSTREAM..$FORK_REMOTE/$BRANCH
-		get_reply
+		get_reply $FORK_REMOTE
 	done
 
 	if [ "`get_first_char $REPLY`" = 'y' ]
