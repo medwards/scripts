@@ -54,7 +54,7 @@ then
 	exit
 fi
 
-LOCAL_BRANCHES=`git branch | grep -v master | grep -v HEAD| tr -d [:blank:] | tr -d '*'`
+LOCAL_BRANCHES=`git branch | grep -v master | grep -v HEAD| grep -v '(no branch)' | tr -d [:blank:] | tr -d '*'`
 for BRANCH in $LOCAL_BRANCHES
 do
 	if [[ $REMOTE_BRANCHES =~ $BRANCH ]]
