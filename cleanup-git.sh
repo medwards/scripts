@@ -2,10 +2,13 @@
 
 # CONFIGURATION
 FORK_REMOTE='origin'
-UPSTREAM='upstream/master'
+UPSTREAM_FORK='upstream'
+UPSTREAM_BRANCH='master'
 
 
 # LOGIC
+
+UPSTREAM="$UPSTREAM_FORK:$UPSTREAM_MASTER"
 
 function get_first_char {
 	echo "$1" | tr [:upper:] [:lower:] | head -c1
@@ -17,6 +20,7 @@ function get_reply {
 }
 
 
+git fetch --multiple $FORK_REMOTE $UPSTREAM_FORK
 REMOTE_BRANCHES=`git branch -r | grep $FORK_REMOTE/ | grep -v master | grep -v HEAD| cut -d/ -f2`
 for BRANCH in $REMOTE_BRANCHES
 do
