@@ -25,7 +25,7 @@ function get_reply {
 	fi
 
 	echo -ne "Remove \033[1m$READ_REMOTE$BRANCH\033[0m$REMOTE_INFO?"
-	read -p " (y/n/i) "
+	read -p " (y/n/i/p) "
 	REPLY=`get_first_char $REPLY`
 }
 
@@ -41,6 +41,11 @@ do
 		then
 			echo "$UPSTREAM..$FORK_REMOTE/$BRANCH contains:"
 			git log $UPSTREAM..$FORK_REMOTE/$BRANCH
+		fi
+		if [ "$REPLY" = 'p' ]
+		then
+			echo "$UPSTREAM..$FORK_REMOTE/$BRANCH contains:"
+			git log $UPSTREAM..$FORK_REMOTE/$BRANCH -p
 		fi
 		get_reply $FORK_REMOTE
 	done
@@ -73,6 +78,11 @@ do
 		then
 			echo "$UPSTREAM..$BRANCH contains:"
 			git log $UPSTREAM..$BRANCH
+		fi
+		if [ "$REPLY" = 'p' ]
+		then
+			echo "$UPSTREAM..$FORK_REMOTE/$BRANCH contains:"
+			git log $UPSTREAM..$FORK_REMOTE/$BRANCH -p
 		fi
 	done
 
