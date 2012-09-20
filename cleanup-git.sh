@@ -8,7 +8,7 @@ UPSTREAM_BRANCH='master'
 
 # LOGIC
 
-UPSTREAM="$UPSTREAM_FORK:$UPSTREAM_MASTER"
+UPSTREAM="$UPSTREAM_FORK/$UPSTREAM_BRANCH"
 
 function get_first_char {
 	echo "$1" | tr [:upper:] [:lower:] | head -c1
