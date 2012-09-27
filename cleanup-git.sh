@@ -35,6 +35,7 @@ REPLY=
 REMOTE_BRANCHES=`git branch -r | grep $FORK_REMOTE/ | grep -v master | grep -v HEAD| cut -d/ -f2`
 for BRANCH in $REMOTE_BRANCHES
 do
+	get_reply $FORK_REMOTE
 	while [ "$REPLY" != 'y' -a "$REPLY" != 'n' ]
 	do
 		if [ "$REPLY" = 'i' ]
@@ -72,6 +73,7 @@ do
 		continue
 	fi
 
+	get_reply
 	while [ "$REPLY" != 'y' -a "$REPLY" != 'n' ]
 	do
 		if [ "$REPLY" = 'i' ]
@@ -84,6 +86,7 @@ do
 			echo "$UPSTREAM..$FORK_REMOTE/$BRANCH contains:"
 			git log $UPSTREAM..$FORK_REMOTE/$BRANCH -p
 		fi
+		get_reply
 	done
 
 	if [ "$REPLY" = 'y' ]
